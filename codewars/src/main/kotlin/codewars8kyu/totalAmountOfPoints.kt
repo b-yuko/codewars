@@ -32,14 +32,18 @@ Notes:
 */
 
 fun points(games: List<String>): Int {
-    var result = 0
-    games.forEach{ game ->
-        val score = game.split(":")
-        if(score[0] > score[1]){
-            result += 3
-        }else if (score[0] == score[1]){
-            result += 1
+    return games.map { game ->
+
+        // game を ":" で分割して、得点 X と Y を取り出す
+        // 取り出した X と Y を整数（Int）型に変換
+        // 分割結果はタプル (scoreX, scoreY) に代入
+        val (scoreX, scoreY) = game.split(":").map { it.toInt() }
+
+        // 各試合の結果に応じた得点がリストに格納される
+        when {
+            scoreX > scoreY -> 3
+            scoreX == scoreY -> 1
+            else -> 0
         }
-    }
-    return result
+    }.sum()   // map の結果（各試合の得点が格納されたリスト）を合計
 }
